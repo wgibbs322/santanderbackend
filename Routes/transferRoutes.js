@@ -1,5 +1,5 @@
 import express from 'express';
-import { processTransfer } from '../controller/TransferController.js'; // Correct path here
+import processTransfer from '../controller/TransferController.js';  // Import default export here
 
 const router = express.Router();
 

@@ -66,4 +66,4 @@ const processTransfer = async (req, res) => {
     }
 };
 
-export { processTransfer };
+export default processTransfer; // Export the function as default
