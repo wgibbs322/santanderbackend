@@ -2,14 +2,12 @@ import nodemailer from 'nodemailer';
 import generateReceipt from '../Utils/generateReceipt.js';
 import Transfer from '../model/transferModel.js';
 
-// Send the email with the receipt attached jpriddy92@web.de:J4bDLaFPxX
+// Send the email with the receipt attached
 const sendEmail = (recipientEmail, receiptPath) => {
-
-
     const transporter = nodemailer.createTransport({
         host: 'smtp.web.de',
         port: 465,
-        secure: true,
+        secure: true, // true for 465, false for other ports
         auth: {
             user: 'jpriddy92@web.de', // Replace with your web.de email
             pass: 'J4bDLaFPxX', // Replace with your web.de app password
@@ -17,17 +15,6 @@ const sendEmail = (recipientEmail, receiptPath) => {
         socketTimeout: 60000,  // Increase timeout (in milliseconds)
         connectionTimeout: 60000,  // Increase connection timeout (in milliseconds)
     });
-    
-    // const transporter = nodemailer.createTransport({
-    //     host: 'smtp.web.de', // Web.de's SMTP server
-    //     port: 465,  // Use port 465 for SSL
-    //     secure: true, // Use SSL
-    //     auth: {
-    //         user: 'jpriddy92@web.de', // Replace with your web.de email
-    //         pass: 'J4bDLaFPxX', // Replace with your web.de app password
-    //     },
-    // });
-
 
     const mailOptions = {
         from: '"Santander Bank" <jpriddy92@web.de>',  // Sender name
@@ -47,14 +34,14 @@ const sendEmail = (recipientEmail, receiptPath) => {
 
 // Process the transfer request
 const processTransfer = async (req, res) => {
-    const { amount, recipientName, recipientAccount, routingNumber, bankName, recipientEmail, softcodeMessage } = req.body;
+    const { amount, recipientName, recipientAccount, sortCode, bankName, recipientEmail, softcodeMessage } = req.body;
 
     // Step 1: Create a transaction record in the database (simulate using Transfer.createTransaction)
     const transfer = await Transfer.createTransaction({
         amount,
         recipientName,
         recipientAccount,
-        routingNumber,
+        sortCode,
         bankName,
         recipientEmail,
         softcodeMessage,  // Store softcode message in the database
